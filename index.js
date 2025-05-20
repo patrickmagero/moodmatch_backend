@@ -72,3 +72,18 @@ app.get('/weather/coords', async (req, res) => {
     res.status(500).send("Error fetching weather by coordinates");
   }
 });
+app.get('/genres', async (req, res) => {
+  try {
+    const response = await axios.get('https://api.themoviedb.org/3/genre/movie/list', {
+      params: {
+        api_key: process.env.TMDB_API_KEY,
+        language: 'en-US'
+      }
+    });
+    res.json(response.data);
+  } catch (err) {
+    console.error("TMDb genre error:", err.message);
+    res.status(500).send("Error fetching genres");
+  }
+});
+
